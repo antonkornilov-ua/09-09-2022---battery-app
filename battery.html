@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery level</title>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;    
+        flex-direction: column;
+    }
+    .battery-indicator{
+        display: flex;
+        justify-content: center;
+        width: 102px;
+        height: 20px;
+        border: 1px solid black;
+    }
+    .textIndicator{
+        font-style: italic;
+    }
+</style>
+</head>
+<body>
+    <div class="wrapper"> <h2>This is your battery level</h2></div>
+    <div class="battery-indicator">
+        <span class="text-indicator"></span>
+    </div>
+    </div>
+    <script>
+        let batteryDiv = document.querySelector(".battery-indicator");
+        let textIndicator = document.querySelector(".text-indicator");
+        navigator.getBattery()
+        .then((battery) => {     
+                const level = battery.level *100;
+                textIndicator.textContent = level;
+                if(level > 80){
+                    console.log("works!");
+                    batteryDiv.style.backgroundColor = "green"
+                } else if (level < 20){
+                    batteryDiv.style.backgroundColor = "red"
+                } else {
+                    batteryDiv.style.backgroundColor = "yellow"
+                }
+                battery.addEventListener('levelchange', (e) =>{       
+                    if (level > 80) {
+                        console.log("works!");
+                        batteryDiv.style.backgroundColor = "green"
+                        textIndicator.textContent = level;
+                    } else if (level < 20) {
+                        batteryDiv.style.backgroundColor = "red"
+                        textIndicator.textContent = level;
+                    } else {
+                        batteryDiv.style.backgroundColor = "yellow"
+                        textIndicator.textContent = level;
+                    }
+            })
+        })
+    </script>
+</body>
+</html>
